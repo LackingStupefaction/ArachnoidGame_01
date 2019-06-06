@@ -7,12 +7,17 @@ public class Movements : MonoBehaviour
     public float speed;
     public float LeftScreenEdge;
     public float RightScreenEdge;
+    public GameManager gm;
     private void Start()
     {
         
     }
     private void Update()
     {
+        if (gm.gameOver)
+        {
+            return;
+        }
         float horizontal = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector2.right * horizontal * Time.deltaTime * speed);

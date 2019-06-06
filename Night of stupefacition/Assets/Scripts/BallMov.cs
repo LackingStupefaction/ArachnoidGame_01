@@ -9,6 +9,7 @@ public class BallMov : MonoBehaviour
     public bool inPlay;
     public Transform paddle;
     public Transform explosion;
+    public GameManager gm;
 
 
     void Start()
@@ -21,6 +22,10 @@ public class BallMov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gm.gameOver)
+        {
+            return;
+        }
         if(!inPlay)
         {
             transform.position = paddle.position;
@@ -41,6 +46,7 @@ public class BallMov : MonoBehaviour
             Debug.Log("Lost");
             rb.velocity = Vector2.zero;
             inPlay = false;
+            gm.UpdateLives(-1);
         }
     }
 
@@ -50,6 +56,7 @@ public class BallMov : MonoBehaviour
         {
             Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
             Destroy(newExplosion.gameObject, 2.5f);
+            gm.UpdateNumberOfBricks();
             Destroy (collision.gameObject);
         }
     }
